@@ -2,6 +2,9 @@ package com.codersongs.algorithm.linkedlist;
 
 import com.codersongs.algorithm.base.ListNode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 141. 环形链表
  * 给定一个链表，判断链表中是否有环。
@@ -41,8 +44,25 @@ public class L141hasCycle {
     public static void main(String[] args) {
 
     }
+
     public boolean hasCycle(ListNode head) {
-        if (head == null || head.next == null){
+        Set<ListNode> memory = new HashSet<>();
+        while (head != null){
+            if (!memory.add(head)){
+                return true;
+            }
+            head = head.next;
+        }
+        return false;
+    }
+
+    /**
+     * 快慢指针
+     * @param head
+     * @return
+     */
+    public boolean hasCycle2(ListNode head) {
+        if (head == null) {
             return false;
         }
         ListNode slow = head;

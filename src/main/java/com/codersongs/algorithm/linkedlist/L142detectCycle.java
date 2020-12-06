@@ -2,6 +2,9 @@ package com.codersongs.algorithm.linkedlist;
 
 import com.codersongs.algorithm.base.ListNode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 142. 环形链表 II
  * 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
@@ -43,13 +46,54 @@ public class L142detectCycle {
 
     }
 
+    public ListNode detectCycle(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null){
+            slow = slow.next;
+            if (fast.next == null){
+                return null;
+            } else {
+                fast = fast.next.next;
+            }
+            if (fast == slow){
+                ListNode ptr = head;
+                while (ptr != slow){
+                    ptr = ptr.next;
+                    slow = slow.next;
+                }
+                return ptr;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    public ListNode detectCycle3(ListNode head) {
+        Set<ListNode> memory = new HashSet<>();
+        while (head != null){
+            if (!memory.add(head)) {
+                return head;
+            }
+            head = head.next;
+        }
+        return null;
+    }
+
     /**
      * 弗洛伊德算法，2 * slow = fast
      *
      * @param head
      * @return
      */
-    public ListNode detectCycle(ListNode head) {
+    public ListNode detectCycle2(ListNode head) {
         if (head == null){
             return null;
         }
